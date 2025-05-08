@@ -1,1 +1,3 @@
-# consul
+# Consul
+
+Repository to demonstrate consul
