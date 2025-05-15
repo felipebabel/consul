@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: service-a # ou service-b
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        enabled: true
+        register: true
+        prefer-ip-address: true
+server:
+  port: 8081 # ou 8082

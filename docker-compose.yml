@@ -1,27 +1,60 @@
-version: "3.8"
+version: "3.9"
 
 services:
+  # -------------------------
+  # Consul (service discovery)
+  # -------------------------
   consul:
-    image: consul
+    image: hashicorp/consul:1.16
+    container_name: consul
+    command: >
+      consul agent
+      -server
+      -ui
+      -bootstrap-expect=1
+      -client=0.0.0.0
+      -data-dir=/consul/data
     ports:
       - "8500:8500"
-      - "8600:8600/udp"
-    command: "agent -dev -client=0.0.0.0"
-
-  service-1:
-    build: ./service-a
+    volumes:
+      - consul-data:/consul/data
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8500/v1/status/leader" ]
+      interval: 10s
+      retries: 5
+  # -------------------------
+  # Service One (port 8081)
+  # -------------------------
+  service-one:
+    build:
+      context: ./service-1
+    container_name: service-1
+    depends_on:
+      - consul
+    environment:
+      SPRING_APPLICATION_NAME: service-1
+      SPRING_CLOUD_CONSUL_HOST: consul
+      SPRING_CLOUD_CONSUL_PORT: 8500
+      SERVER_PORT: 8081
     ports:
       - "8081:8081"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
+
+  # -------------------------
+  # Service Two (port 8082)
+  # -------------------------
+  service-two:
+    build:
+      context: ./service-2
+    container_name: service-2
     depends_on:
       - consul
-
-  service-2:
-    build: ./service-b
+    environment:
+      SPRING_APPLICATION_NAME: service-2
+      SPRING_CLOUD_CONSUL_HOST: consul
+      SPRING_CLOUD_CONSUL_PORT: 8500
+      SERVER_PORT: 8082
     ports:
       - "8082:8082"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    depends_on:
-      - consul
+
+volumes:
+  consul-data:
