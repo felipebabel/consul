@@ -40,7 +40,7 @@ services:
       - "8081:8081"
 
   # -------------------------
-  # Service Two (port 8082)
+  # Service Two (port 8082) Instance 1
   # -------------------------
   service-two:
     build:
@@ -55,6 +55,22 @@ services:
       SERVER_PORT: 8082
     ports:
       - "8082:8082"
+
+  # Service Two (port 8083) Instance 2
+  # -------------------------
+  service-two-2:
+    build:
+      context: ./service-2
+    container_name: service-2-instance-2
+    depends_on:
+      - consul
+    environment:
+      SPRING_APPLICATION_NAME: service-2
+      SPRING_CLOUD_CONSUL_HOST: consul
+      SPRING_CLOUD_CONSUL_PORT: 8500
+      SERVER_PORT: 8083
+    ports:
+      - "8083:8083"
 
 volumes:
   consul-data:

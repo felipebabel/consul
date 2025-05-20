@@ -12,3 +12,11 @@ spring:
 server:
   port: 8082
 
+logging:
+  level:
+    feign: DEBUG
+    serviceone.demo.controller: DEBUG
+    org.springframework.cloud.openfeign: DEBUG
+
+
+
