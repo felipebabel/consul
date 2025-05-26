@@ -3,17 +3,19 @@ package serviceone.demo.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import serviceone.demo.service.HelloService;
+
 @RestController
 public class TestController {
 
-    private final ServiceTwoClient client;
+    private final HelloService helloService;
 
-    public TestController(ServiceTwoClient client) {
-        this.client = client;
+    public TestController(HelloService helloService) {
+        this.helloService = helloService;
     }
 
-    @GetMapping("/call-two")
-    public String callTwo() {
-        return client.getHello();
+    @GetMapping("/call")
+    public String call() {
+        return helloService.getHello();
     }
 }
