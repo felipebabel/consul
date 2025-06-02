@@ -1,0 +1,8 @@
+[
+  {
+    "SourceName": "service-1",
+    "DestinationName": "service-3",
+    "Action": "allow"
+  }
+]
+

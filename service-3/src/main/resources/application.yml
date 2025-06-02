@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: service-3
+  config:
+    import: "consul:" # <-- Coloque aqui
+  cloud:
+    consul:
+      config:
+        enabled: true # <-- Coloque aqui
+        prefix: config # Seu prefixo, geralmente 'config'
+        fail-fast: false # <-- Coloque aqui
+server:
+  port: 8084
+

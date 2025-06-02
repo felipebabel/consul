@@ -5,32 +5,34 @@ services:
   # Consul (service discovery)
   # -------------------------
   consul:
-    image: hashicorp/consul:1.16
+    image: hashicorp/consul:1.18.0
     container_name: consul
-    command: >
-      consul agent
-      -server
-      -ui
-      -bootstrap-expect=1
-      -client=0.0.0.0
-      -data-dir=/consul/data
+    command: "consul agent -dev -client=0.0.0.0 -ui"
     ports:
       - "8500:8500"
+      - "8600:8600/tcp"
+      - "8600:8600/udp"
+    networks:
+      - consul-net
     volumes:
       - consul-data:/consul/data
+      - ./consul/config:/consul/config
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8500/v1/status/leader" ]
+      test: ["CMD", "curl", "-f", "http://localhost:8500/v1/status/leader"]
       interval: 10s
+      timeout: 5s
       retries: 5
+
   # -------------------------
   # Service One (port 8081)
   # -------------------------
-  service-one:
+  service-1:
     build:
       context: ./service-1
     container_name: service-1
     depends_on:
-      - consul
+      consul:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: service-1
       SPRING_CLOUD_CONSUL_HOST: consul
@@ -38,6 +40,8 @@ services:
       SERVER_PORT: 8081
     ports:
       - "8081:8081"
+    networks:
+      - consul-net
 
   # -------------------------
   # Service Two (port 8082) Instance 1
@@ -47,7 +51,8 @@ services:
       context: ./service-2
     container_name: service-2
     depends_on:
-      - consul
+      consul:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: service-2
       SPRING_CLOUD_CONSUL_HOST: consul
@@ -55,6 +60,8 @@ services:
       SERVER_PORT: 8082
     ports:
       - "8082:8082"
+    networks:
+      - consul-net
 
   # Service Two (port 8083) Instance 2
   # -------------------------
@@ -63,7 +70,8 @@ services:
       context: ./service-2
     container_name: service-2-instance-2
     depends_on:
-      - consul
+      consul:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: service-2
       SPRING_CLOUD_CONSUL_HOST: consul
@@ -71,6 +79,31 @@ services:
       SERVER_PORT: 8083
     ports:
       - "8083:8083"
+    networks:
+      - consul-net
+  # -------------------------
+  # Service Three (port 8084)
+  # -------------------------
+  service-3:
+    build:
+      context: ./service-3
+    container_name: service-3
+    depends_on:
+      consul:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: service-3
+      SPRING_CLOUD_CONSUL_HOST: consul
+      SPRING_CLOUD_CONSUL_PORT: 8500
+      SERVER_PORT: 8084
+    ports:
+      - "8084:8084"
+    networks:
+      - consul-net
 
 volumes:
   consul-data:
+
+networks:
+  consul-net:
+    driver: bridge

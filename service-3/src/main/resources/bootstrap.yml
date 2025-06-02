@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: my-app
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      config:
+        enabled: true
+        prefix: config # Prefixo no Consul KV Store (e.g., config/my-consul-app/my-property)
+        format: YAML # Ou KEY_VALUE, PROPERTIES, etc. Depende de como você armazena no Consul
+        data-key: data # Chave que contém os dados da configuração se o formato for YAML ou PROPERTIES
+        fail-fast: false

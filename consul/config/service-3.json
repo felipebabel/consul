@@ -1,0 +1,10 @@
+{
+  "service": {
+    "name": "service-3",
+    "id": "service-3",
+    "port": 8083,
+    "connect": {
+      "sidecar_service": {}
+    }
+  }
+}
