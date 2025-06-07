@@ -14,6 +14,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/consul/pom.xml" />
         <option value="$PROJECT_DIR$/envoy/pom.xml" />
       </set>
     </option>

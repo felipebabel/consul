@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>service-1</artifactId> <!-- Troque para service-b se for o outro -->
+    <artifactId>service-1</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Service 1</name>
-    <description>Microservice A for testing Consul</description>
+    <description>Microservice 1 for testing Consul</description>
     <packaging>jar</packaging>
 
     <properties>
@@ -44,7 +44,6 @@
             <version>0.11.5</version>
         </dependency>
 
-        <!-- Implementação da API (necessária em tempo de execução) -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
@@ -52,14 +51,13 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Suporte a JSON com Jackson (necessário para parsing do token) -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
             <version>0.11.5</version>
             <scope>runtime</scope>
         </dependency>
-        <!-- Spring Boot Web -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -80,19 +78,16 @@
             <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
         </dependency>
 
-        <!-- Spring Boot Actuator (para health check e métricas) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-        <!-- Spring Cloud Consul -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-consul-discovery</artifactId>
         </dependency>
 
-        <!-- Dependência para testes -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

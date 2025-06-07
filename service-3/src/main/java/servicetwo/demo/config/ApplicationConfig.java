@@ -8,15 +8,8 @@ import org.springframework.stereotype.Component;
 @RefreshScope
 public class ApplicationConfig {
 
-    @Value("${message:default}")
-    private String message;
-
     @Value("${audience:default}")
     private String audience;
-
-    public String getMessage() {
-        return this.message;
-    }
 
     public String getAudience() {
         return this.audience;

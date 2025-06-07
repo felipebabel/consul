@@ -19,7 +19,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setAudience("service-1")
+                .setAudience("service-2")
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(KEY, SignatureAlgorithm.HS256)
                 .compact();

@@ -48,15 +48,15 @@ resilience4j:
   retry:
     instances:
       serviceTwo:
-        maxAttempts: 3       # Try 3 vezes
-        waitDuration: 2s     # Wait 2s between requisitions
+        maxAttempts: 3
+        waitDuration: 2s
 
   ratelimiter:
     instances:
       serviceTwo:
-        limitForPeriod: 2    # Máx 2 requisições
+        limitForPeriod: 2
         limitRefreshPeriod: 1s
-        timeoutDuration: 0   # Não espera, falha direto se atingir o limite
+        timeoutDuration: 0
 
 
 

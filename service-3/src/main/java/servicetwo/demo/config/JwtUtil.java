@@ -30,7 +30,6 @@ public class JwtUtil {
                     .parseClaimsJws(token);
 
             String audience = claimsJws.getBody().getAudience();
-            System.out.println("Audience: " + this.applicationConfig.getAudience());
             return this.applicationConfig.getAudience().equals(audience);
         } catch (JwtException e) {
             return false;
