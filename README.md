@@ -4,8 +4,6 @@
 
 As part of a college presentation where I had to explain how Consul works, I created a hands-on project to demonstrate its core functionalities in a real microservices environment.
 
-
-
 This project demonstrates a microservices architecture using **HashiCorp Consul** for service discovery and KV configuration, along with **JWT-based authentication** and **basic round-robin load balancing** across service instances.
 
 ## 🧩 Architecture Overview
